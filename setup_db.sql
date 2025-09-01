@@ -120,3 +120,18 @@ DO $$ BEGIN
     $$;
   END IF;
 END $$;
+
+-- Evidence table to store uploaded files metadata
+CREATE TABLE IF NOT EXISTS evidence (
+  id SERIAL PRIMARY KEY,
+  evaluacion_id INTEGER REFERENCES evaluaciones(id) ON DELETE CASCADE,
+  seccion INTEGER NOT NULL,
+  pregunta INTEGER NOT NULL,
+  filename VARCHAR(512) NOT NULL,
+  content_type VARCHAR(255),
+  storage_key VARCHAR(1024) UNIQUE NOT NULL,
+  size_bytes BIGINT,
+  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_evidence_eval ON evidence(evaluacion_id);

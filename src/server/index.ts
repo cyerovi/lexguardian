@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { Request, Response, NextFunction } from 'express';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
@@ -6,6 +7,10 @@ import cors from 'cors';
 import path from 'path';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand, CreateBucketCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { v4 as uuidv4 } from 'uuid';
+import mime from 'mime-types';
 
 // Environment
 const port: number = Number(process.env.PORT || 3000);
@@ -33,7 +38,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 app.use(express.static('public'));
-app.use(express.static(path.join(process.cwd())));
+// Serve built React app from client/dist in production
+const clientDistPath = path.join(process.cwd(), 'client', 'dist');
+app.use(express.static(clientDistPath));
 
 // DB
 const pool = new Pool({
@@ -47,6 +54,33 @@ const transporter = nodemailer.createTransport({
   auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
 });
 
+// S3 / MinIO client
+const s3 = new S3Client({
+  region: process.env.S3_REGION || 'us-east-1',
+  endpoint: process.env.S3_ENDPOINT,
+  forcePathStyle: true,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY || '',
+    secretAccessKey: process.env.S3_SECRET_KEY || ''
+  }
+});
+const S3_BUCKET = process.env.S3_BUCKET_NAME || 'lexguardian-local';
+
+// Ensure bucket exists (MinIO)
+(async () => {
+  try {
+    await s3.send(new HeadBucketCommand({ Bucket: S3_BUCKET }));
+  } catch {
+    try {
+      await s3.send(new CreateBucketCommand({ Bucket: S3_BUCKET }));
+      // no-op if created
+    } catch (err) {
+      // log but don't crash server
+      console.error('S3 bucket ensure failed:', (err as Error).message);
+    }
+  }
+})();
+
 // Helper to send HTML with strict no-store headers
 function sendNoStoreHTML(res: Response, file: string) {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -57,16 +91,15 @@ function sendNoStoreHTML(res: Response, file: string) {
 }
 
 // Routes (HTML)
-app.get('/', (_req: Request, res: Response) => sendNoStoreHTML(res, 'index.html'));
-app.get('/seccion_uno', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_uno.html'));
-app.get('/seccion_dos', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_dos.html'));
-app.get('/seccion_tres', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_tres.html'));
-app.get('/seccion_cuatro', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_cuatro.html'));
-app.get('/seccion_cinco', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_cinco.html'));
-app.get('/seccion_seis', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_seis.html'));
-app.get('/seccion_siete', (_req: Request, res: Response) => sendNoStoreHTML(res, 'seccion_siete.html'));
-app.get('/resultados', (_req: Request, res: Response) => sendNoStoreHTML(res, 'resultados.html'));
-app.get('/instrucciones', (_req: Request, res: Response) => sendNoStoreHTML(res, 'instrucciones.html'));
+// React SPA fallback for non-API routes except resultados
+app.get(['/', '/seccion_uno','/seccion_dos','/seccion_tres','/seccion_cuatro','/seccion_cinco','/seccion_seis','/seccion_siete','/instrucciones'], (_req: Request, res: Response) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
+});
+
+// Serve resultados.html from project root to reuse existing charts and logic
+app.get('/resultados', (_req: Request, res: Response) => {
+  sendNoStoreHTML(res, 'resultados.html');
+});
 
 // API (minimal typings, same behavior)
 app.post('/api/registro', async (req: Request, res: Response) => {
@@ -156,6 +189,97 @@ app.post('/api/marcar-pdf-generado', async (req: Request, res: Response) => {
     res.status(200).json({ success: true, message: 'PDF marcado como generado' });
   } catch (error: unknown) {
     res.status(500).json({ error: 'Error interno del servidor', details: (error as Error).message });
+  }
+});
+
+// Evidence: presign upload URL
+app.post('/api/evidence/presign', async (req: Request, res: Response) => {
+  try {
+    const { evaluacionId, seccion, pregunta, filename, contentType } = req.body as Record<string, any>;
+    if (!evaluacionId || typeof seccion !== 'number' || typeof pregunta !== 'number' || !filename) {
+      return res.status(400).json({ error: 'evaluacionId, seccion, pregunta y filename son requeridos' });
+    }
+
+    const safeExt = String(filename).includes('.') ? String(filename).split('.').pop() : (mime.extension(contentType || '') || 'bin');
+    const storageKey = `evidence/${evaluacionId}/${Date.now()}_${uuidv4()}.${safeExt}`;
+
+    const putCmd = new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: storageKey,
+      ContentType: contentType || mime.lookup(String(filename)) || 'application/octet-stream'
+    });
+    const url = await getSignedUrl(s3, putCmd, { expiresIn: 60 * 5 });
+    return res.json({ url, storageKey, expiresIn: 300 });
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Error generando URL de carga', details: (error as Error).message });
+  }
+});
+
+// Evidence: record metadata after successful upload
+app.post('/api/evidence/record', async (req: Request, res: Response) => {
+  try {
+    const { evaluacionId, seccion, pregunta, storageKey, filename, contentType, sizeBytes } = req.body as Record<string, any>;
+    if (!evaluacionId || typeof seccion !== 'number' || typeof pregunta !== 'number' || !storageKey || !filename) {
+      return res.status(400).json({ error: 'Campos requeridos: evaluacionId, seccion, pregunta, storageKey, filename' });
+    }
+
+    await pool.query(
+      `INSERT INTO evidence (
+        evaluacion_id, seccion, pregunta, filename, content_type, storage_key, size_bytes
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7)
+      ON CONFLICT (storage_key) DO NOTHING`,
+      [evaluacionId, seccion, pregunta, filename, contentType || null, storageKey, sizeBytes || null]
+    );
+
+    res.json({ success: true });
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Error guardando evidencia', details: (error as Error).message });
+  }
+});
+
+// Evidence: upload proxy (base64 body) to avoid CORS issues
+app.post('/api/evidence/upload-proxy', async (req: Request, res: Response) => {
+  try {
+    const { storageKey, base64Data, contentType } = req.body as Record<string, any>;
+    if (!storageKey || !base64Data) return res.status(400).json({ error: 'storageKey y base64Data son requeridos' });
+    const buffer = Buffer.from(String(base64Data), 'base64');
+    await s3.send(new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: storageKey,
+      Body: buffer,
+      ContentType: contentType || 'application/octet-stream'
+    }));
+    res.json({ success: true });
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Error subiendo evidencia', details: (error as Error).message });
+  }
+});
+
+// Evidence: list by evaluacion
+app.get('/api/evidence/:evaluacionId', async (req: Request, res: Response) => {
+  try {
+    const evaluacionId = Number(req.params.evaluacionId);
+    if (!Number.isFinite(evaluacionId)) return res.status(400).json({ error: 'evaluacionId inválido' });
+    const { rows } = await pool.query(
+      'SELECT id, evaluacion_id, seccion, pregunta, filename, content_type, storage_key, size_bytes, uploaded_at FROM evidence WHERE evaluacion_id = $1 ORDER BY uploaded_at DESC',
+      [evaluacionId]
+    );
+    res.json(rows);
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Error listando evidencias', details: (error as Error).message });
+  }
+});
+
+// Evidence: get download URL
+app.get('/api/evidence/download-url', async (req: Request, res: Response) => {
+  try {
+    const storageKey = String(req.query.key || '');
+    if (!storageKey) return res.status(400).json({ error: 'key es requerido' });
+    const getCmd = new GetObjectCommand({ Bucket: S3_BUCKET, Key: storageKey });
+    const url = await getSignedUrl(s3, getCmd, { expiresIn: 60 * 5 });
+    res.json({ url, expiresIn: 300 });
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Error generando URL de descarga', details: (error as Error).message });
   }
 });
 

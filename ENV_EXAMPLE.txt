@@ -1,6 +1,13 @@
 PORT=3000
 CORS_ORIGIN=https://diagnostico-pdp-agencia43-6a9172764c32.herokuapp.com
-DATABASE_URL=
+DATABASE_URL=postgresql://lexguard:lexguard@localhost:5432/lexguardian
 EMAIL_SERVICE=gmail
 EMAIL_USER=
 EMAIL_PASS=
+REDIS_URL=redis://localhost:6379
+S3_ENDPOINT=http://localhost:9000
+S3_ACCESS_KEY=minioadmin
+S3_SECRET_KEY=minioadmin123
+S3_BUCKET_NAME=lexguardian-local
+SMTP_HOST=localhost
+SMTP_PORT=1025
