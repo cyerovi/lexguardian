@@ -2621,69 +2621,87 @@ function displaySectionResults(resultados) {
 function configurarBotones() {
   try {
     console.log('Configurando botones de la página de resultados');
-    
-    // Configure PDF download button
     const pdfButton = document.getElementById('descargarPDF');
     if (pdfButton) {
       pdfButton.addEventListener('click', async function() {
         try {
-          console.log('Iniciando descarga de PDF...');
+          console.log('Generando PDF desde servidor...');
           this.disabled = true;
           this.textContent = 'Generando PDF...';
-          
-          // Generate PDF without auto-download
-          const doc = await PDFGenerator.generatePDF();
-          
-          // Manual download with proper filename
-          const fileName = `Informe_Evaluacion_PDP_${new Date().toISOString().split('T')[0]}.pdf`;
-          doc.save(fileName);
-          
-          console.log('PDF descargado exitosamente:', fileName);
-          
+          const usuarioData = JSON.parse(localStorage.getItem('usuarioData') || '{}');
+          const keys = ['seccion1Form','seccion2Form','seccion3Form','seccion4Form','seccion5Form','seccion6Form','seccion7Form'];
+          const secciones = keys.map(k => JSON.parse(localStorage.getItem(k) || '[]'));
+          const resultadosCalculados = JSON.parse(localStorage.getItem('resultadosCalculados') || 'null');
+          const r = await fetch('/api/pdf/resultados', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuarioData, secciones, resultadosCalculados })
+          });
+          if (!r.ok) throw new Error('Fallo al generar PDF');
+          const blob = await r.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `Informe_Evaluacion_PDP_${new Date().toISOString().split('T')[0]}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
         } catch (error) {
-          console.error('Error generando PDF:', error);
-          alert('Error al generar el PDF. Por favor, inténtelo de nuevo.');
+          console.error('Error generando PDF (server):', error);
+          alert('Error al generar el PDF.');
         } finally {
           this.disabled = false;
           this.textContent = 'DESCARGAR EL INFORME';
         }
       });
     }
-    
-    // Configure email button
+
     const emailButton = document.getElementById('enviarEmail');
     if (emailButton) {
       emailButton.addEventListener('click', async function() {
         try {
-          console.log('Iniciando envío de email...');
+          console.log('Enviando email desde servidor...');
           this.disabled = true;
           this.textContent = 'Enviando...';
-          
-          // Generate PDF for email (without auto-download)
-          const doc = await PDFGenerator.generatePDF();
-          await EmailSender.sendEmailWithPDF(doc);
-          
-    } catch (error) {
-          console.error('Error enviando email:', error);
-          // Error message is already shown in EmailSender.sendEmailWithPDF
+          const usuarioData = JSON.parse(localStorage.getItem('usuarioData') || '{}');
+          const keys = ['seccion1Form','seccion2Form','seccion3Form','seccion4Form','seccion5Form','seccion6Form','seccion7Form'];
+          const secciones = keys.map(k => JSON.parse(localStorage.getItem(k) || '[]'));
+          const resultadosCalculados = JSON.parse(localStorage.getItem('resultadosCalculados') || 'null');
+          const r = await fetch('/api/email/resultados', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: usuarioData.email,
+              nombre: usuarioData.nombre,
+              empresa: usuarioData.nombre_responsable || usuarioData.empresa,
+              usuarioData,
+              secciones,
+              resultadosCalculados
+            })
+          });
+          if (!r.ok) {
+            const e = await r.json().catch(()=>({}));
+            throw new Error(e.error || 'Fallo al enviar email');
+          }
+          alert('Informe enviado por email');
+        } catch (error) {
+          console.error('Error enviando email (server):', error);
+          alert('Error al enviar el email.');
         } finally {
           this.disabled = false;
           this.textContent = 'ENVIAR POR EMAIL';
-    }
-  });
-}
-
-    // Configure back button
-    const backButton = document.getElementById('volverFormulario');
-    if (backButton) {
-      backButton.addEventListener('click', function() {
-        window.location.href = 'index.html';
+        }
       });
     }
-    
+
+    const backButton = document.getElementById('volverFormulario');
+    if (backButton) {
+      backButton.addEventListener('click', function() { window.location.href = 'index.html'; });
+    }
+
     console.log('Botones configurados correctamente');
-    
-    } catch (error) {
+  } catch (error) {
     console.error('Error configurando botones:', error);
   }
 }
