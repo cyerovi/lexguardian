@@ -7,6 +7,7 @@ import cors from 'cors';
 import path from 'path';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import puppeteer from 'puppeteer';
 import { S3Client, PutObjectCommand, GetObjectCommand, HeadBucketCommand, CreateBucketCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { v4 as uuidv4 } from 'uuid';
@@ -99,6 +100,82 @@ app.get(['/', '/seccion_uno','/seccion_dos','/seccion_tres','/seccion_cuatro','/
 // Serve resultados.html from project root to reuse existing charts and logic
 app.get('/resultados', (_req: Request, res: Response) => {
   sendNoStoreHTML(res, 'resultados.html');
+});
+
+// Generate PDF of results page
+app.post('/api/pdf/resultados', async (req: Request, res: Response) => {
+  try {
+    const baseUrl = `http://localhost:${port}/resultados`;
+    const browser = await puppeteer.launch({ args: ['--no-sandbox','--disable-setuid-sandbox'] });
+    const page = await browser.newPage();
+    // Propagate localStorage payload if provided
+    const { usuarioData, secciones, resultadosCalculados } = (req.body as any) || {};
+    await page.goto(baseUrl, { waitUntil: 'networkidle2' });
+    if (usuarioData || secciones || resultadosCalculados) {
+      await page.evaluate(({ usuarioData, secciones, resultadosCalculados }) => {
+        try {
+          if (usuarioData) localStorage.setItem('usuarioData', JSON.stringify(usuarioData));
+          if (secciones) {
+            const keys = ['seccion1Form','seccion2Form','seccion3Form','seccion4Form','seccion5Form','seccion6Form','seccion7Form'];
+            keys.forEach((k, i) => { if (secciones[i]) localStorage.setItem(k, JSON.stringify(secciones[i])); });
+          }
+          if (resultadosCalculados) localStorage.setItem('resultadosCalculados', JSON.stringify(resultadosCalculados));
+        } catch {}
+      }, { usuarioData, secciones, resultadosCalculados });
+      await page.reload({ waitUntil: 'networkidle2' });
+    }
+    // Give charts time to render
+    await new Promise((r) => setTimeout(r, 800));
+    const pdf = await page.pdf({ format: 'A4', printBackground: true });
+    await browser.close();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="Informe_Evaluacion_PDP.pdf"');
+    res.send(pdf);
+  } catch (err: any) {
+    console.error('PDF error:', err);
+    res.status(500).json({ error: 'No se pudo generar el PDF', details: err.message });
+  }
+});
+
+// Email PDF
+app.post('/api/email/resultados', async (req: Request, res: Response) => {
+  try {
+    const { email, nombre, empresa, usuarioData, secciones, resultadosCalculados } = (req.body as any) || {};
+    if (!email) return res.status(400).json({ error: 'Email requerido' });
+    // Generate PDF via headless browser
+    const browser = await puppeteer.launch({ args: ['--no-sandbox','--disable-setuid-sandbox'] });
+    const page = await browser.newPage();
+    await page.goto(`http://localhost:${port}/resultados`, { waitUntil: 'networkidle2' });
+    if (usuarioData || secciones || resultadosCalculados) {
+      await page.evaluate(({ usuarioData, secciones, resultadosCalculados }) => {
+        try {
+          if (usuarioData) localStorage.setItem('usuarioData', JSON.stringify(usuarioData));
+          if (secciones) {
+            const keys = ['seccion1Form','seccion2Form','seccion3Form','seccion4Form','seccion5Form','seccion6Form','seccion7Form'];
+            keys.forEach((k, i) => { if (secciones[i]) localStorage.setItem(k, JSON.stringify(secciones[i])); });
+          }
+          if (resultadosCalculados) localStorage.setItem('resultadosCalculados', JSON.stringify(resultadosCalculados));
+        } catch {}
+      }, { usuarioData, secciones, resultadosCalculados });
+      await page.reload({ waitUntil: 'networkidle2' });
+    }
+    await new Promise((r) => setTimeout(r, 800));
+    const pdf = await page.pdf({ format: 'A4', printBackground: true });
+    await browser.close();
+
+    await transporter.sendMail({
+      from: `Diagnóstico PDP <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Informe de Evaluación de Protección de Datos - ${empresa || 'Empresa'}`,
+      html: `<p>Estimado(a) ${nombre || 'Usuario'}, adjuntamos su informe de evaluación PDP.</p>`,
+      attachments: [{ filename: 'Informe_Evaluacion_PDP.pdf', content: Buffer.from(pdf) }]
+    });
+
+    res.json({ success: true });
+  } catch (err: any) {
+    console.error('Email error:', err);
+    res.status(500).json({ error: 'No se pudo enviar el email', details: err.message });
+  }
 });
 
 // API (minimal typings, same behavior)
