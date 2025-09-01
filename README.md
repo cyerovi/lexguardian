@@ -1,0 +1,3 @@
+# lexguardian
+
+Project initialization.
