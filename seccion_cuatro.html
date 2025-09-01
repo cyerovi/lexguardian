@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 4 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">4. DERECHOS DE LOS TITULARES</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            
+            <div class="progress-bar mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" 
+                         class="bg-blue-600 h-2 rounded-full" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+
+            <form id="seccion4Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">4.1 ¿Existe un procedimiento para atender los derechos ARCO?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) No existe 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Existe informalmente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Existe, pero no está documentado 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Existe, está documentado y se aplica 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">4.2 ¿Se mantiene un registro de solicitudes de derechos ARCO?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No se mantiene ningún registro 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Se mantiene un registro básico 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Se mantiene un registro estructurado pero con áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Se mantiene un registro completo y actualizado 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">4.3 ¿Se han establecido plazos máximos de respuesta para solicitudes ARCO?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No se han establecido plazos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Plazos establecidos pero no documentados 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Plazos documentados pero no siempre cumplidos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Plazos documentados y siempre cumplidos 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">4.4 ¿Existe un canal específico para la recepción de solicitudes ARCO?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No existe ningún canal específico 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Canal básico, poco difundido 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Canal oficial bien establecido pero con áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Canal completamente implementado y gestionado eficientemente 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">4.5 ¿Se verifica la identidad del titular antes de ejercer sus derechos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No se realiza ninguna verificación 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Verificaciones básicas, sin protocolo 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Proceso de verificación estructurado pero empírico 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Sistema robusto y completo de verificación de identidad 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-6 gap-4">
+                    <button type="button" onclick="window.location.href='seccion_tres.html'" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">Regresar</button>
+                    <button id="btnSiguiente" type="submit" disabled class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+                Sección 4 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

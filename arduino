@@ -1,0 +1,22 @@
+AGSOFT/
+├── index.html                  # Página inicial con formulario de registro
+├── instrucciones.html          # Instrucciones del diagnóstico
+├── seccion_uno.html            # Sección 1: Gobierno y Cumplimiento
+├── seccion_dos.html            # Sección 2: Gestión de Consentimientos
+├── seccion_tres.html           # Sección 3: Medidas de Seguridad
+├── seccion_cuatro.html         # Sección 4: Derechos de Titulares
+├── seccion_cinco.html          # Sección 5: Transferencias de Datos
+├── seccion_seis.html           # Sección 6: Gestión de Proveedores
+├── seccion_siete.html          # Sección 7: Gestión de Incidentes
+├── resultados.html             # Página de resultados con gráfico
+├── js/
+│   ├── script.js               # Lógica principal con todas las funciones
+│   └── validacion.js           # Validación del formulario inicial
+├── css/
+│   └── styles.css              # Estilos unificados
+├── fonts/
+│   ├── inter.woff2             # Fuente local para mejor rendimiento
+│   └── inter-bold.woff2        # Variante negrita
+├── images/
+│   └── portada_pdp.jpg         # Imágenes del sitio
+└── server.js                   # Servidor para manejo de correos

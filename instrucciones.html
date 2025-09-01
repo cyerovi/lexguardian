@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instrucciones - Evaluación de Protección de Datos Personales</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Update Google Fonts import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Aptos', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .instrucciones-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .titulo-instrucciones {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 2rem 0 2.5rem;
+            color: #1f52b0;
+            line-height: 1.2;
+        }
+
+        .contenido-instrucciones {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .parrafo-principal,
+        .parrafo-secundario,
+        .parrafo-contacto {
+            text-align: justify;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #334155;
+        }
+
+        .secciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .seccion-card {
+            background-color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid #1f52b0;
+        }
+
+        .seccion-titulo {
+            font-weight: 600;
+            color: #1f52b0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .seccion-descripcion {
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .instrucciones-lista {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .instrucciones-lista li {
+            margin-bottom: 0.75rem;
+            color: #475569;
+        }
+
+        .nota-importante {
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .nota-importante strong {
+            color: #dc2626;
+        }
+
+        .btn-primary {
+            background-color: #1f52b0;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e40af;
+            transform: translateY(-1px);
+        }
+
+        .contenedor-boton {
+            display: flex;
+            justify-content: center;
+            margin-top: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .instrucciones-container {
+                padding: 1rem;
+            }
+            
+            .titulo-instrucciones {
+                font-size: 2rem;
+            }
+            
+            .contenido-instrucciones {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="instrucciones-container">
+        <h1 class="titulo-instrucciones">Instrucciones para la Evaluación</h1>
+        
+        <div class="contenido-instrucciones">
+            <p class="parrafo-principal">
+                Bienvenido a la <strong>Herramienta de Evaluación del Nivel de Cumplimiento en Protección de Datos Personales</strong> de AGENCIA43. Esta herramienta gratuita le proporcionará una evaluación inicial del estado de su empresa en relación al cumplimiento de la Ley de Protección de Datos Personales y su reglamento.
+            </p>
+
+            <p class="parrafo-principal">
+                El cuestionario está estructurado en <strong>7 secciones</strong>, con <strong>5 preguntas</strong> cada una, para un total de <strong>35 preguntas</strong>. Cada sección evalúa un aspecto específico de la protección de datos personales en su organización.
+            </p>
+
+            <div class="secciones-grid">
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">1. Gobierno y Cumplimiento Normativo</h3>
+                    <p class="seccion-descripcion">Evalúa la estructura organizacional y los controles establecidos para el cumplimiento normativo.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">2. Gestión de Consentimientos</h3>
+                    <p class="seccion-descripcion">Analiza los procesos de obtención y gestión de consentimientos para el tratamiento de datos.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">3. Medidas de Seguridad</h3>
+                    <p class="seccion-descripcion">Revisa las medidas técnicas y organizativas implementadas para proteger los datos personales.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">4. Derechos de los Titulares</h3>
+                    <p class="seccion-descripcion">Evalúa los mecanismos para garantizar el ejercicio de los derechos de los titulares de datos.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">5. Transferencias de Datos</h3>
+                    <p class="seccion-descripcion">Analiza los procesos de transferencia nacional e internacional de datos personales.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">6. Gestión de Proveedores</h3>
+                    <p class="seccion-descripcion">Revisa los controles establecidos para la gestión de proveedores y terceros.</p>
+                </div>
+                <div class="seccion-card">
+                    <h3 class="seccion-titulo">7. Gestión de Incidentes</h3>
+                    <p class="seccion-descripcion">Evalúa los procedimientos para la gestión y notificación de incidentes de seguridad.</p>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.3rem; color: #1f52b0; margin: 2rem 0 1rem;">Instrucciones Generales:</h2>
+            <ul class="instrucciones-lista">
+                <li>Para cada pregunta, seleccione <strong>UNA SOLA</strong> opción que mejor refleje la situación actual de su organización.</li>
+                <li>El tiempo estimado para completar el cuestionario es de aproximadamente <strong>20-25 minutos</strong>.</li>
+                <li>Puede guardar su progreso y continuar más tarde.</li>
+                <li>Al finalizar, recibirá un informe detallado con los resultados y recomendaciones.</li>
+            </ul>
+
+            <div class="nota-importante">
+                <strong>Nota Importante:</strong> Este diagnóstico proporciona una evaluación inicial y no constituye un documento legal de cumplimiento. Para una evaluación completa y la elaboración de la matriz de riesgos, contáctenos para obtener una asesoría especializada.
+            </div>
+
+            <p class="parrafo-contacto">
+                ¿Necesita una evaluación más detallada o asesoría especializada? Nuestro equipo está listo para ayudarle a implementar un programa robusto de protección de datos personales adaptado a las necesidades de su organización.
+            </p>
+
+            <div class="contenedor-boton">
+                <button id="btnIniciar" class="btn-primary">
+                    <span>COMENZAR EVALUACIÓN</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

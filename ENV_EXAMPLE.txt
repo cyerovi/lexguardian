@@ -1,0 +1,6 @@
+PORT=3000
+CORS_ORIGIN=https://diagnostico-pdp-agencia43-6a9172764c32.herokuapp.com
+DATABASE_URL=
+EMAIL_SERVICE=gmail
+EMAIL_USER=
+EMAIL_PASS=

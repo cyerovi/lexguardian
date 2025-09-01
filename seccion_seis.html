@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 6 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">6. GESTIÓN DE PROVEEDORES Y TERCEROS</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            
+            <!-- Update progress bar -->
+            <div class="progress-bar mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" 
+                         class="bg-blue-600 h-2 rounded-full" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+
+            <form id="seccion6Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">6.1 ¿Existe un proceso de evaluación de proveedores en materia de protección de datos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) No existe 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Evaluación básica sin criterios definidos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Evaluación con criterios básicos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Evaluación completa y documentada 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">6.2 ¿Se realizan auditorías a proveedores que procesan datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No se realizan 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Se realizan sin periodicidad definida 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Se realizan anualmente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Se realizan periódicamente con seguimiento 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">6.3 ¿Existen cláusulas específicas de protección de datos en contratos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No existen cláusulas de protección de datos en los contratos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Hay cláusulas básicas, pero poco detalladas y no estandarizadas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Existen cláusulas estructuradas y estandarizadas, aunque con aspectos a mejorar 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Se cuenta con cláusulas completas, detalladas y actualizadas en todos los contratos 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">6.4 ¿Se mantiene un registro actualizado de encargados del tratamiento?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No existe registro de encargados del tratamiento 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Hay un registro básico sin actualización regular ni detalles completos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Existe un registro estructurado con actualizaciones periódicas, pero con áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Se mantiene un registro completo, detallado y constantemente actualizado 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">6.5 ¿Existe un procedimiento de terminación de relaciones con proveedores?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No existe ningún procedimiento de terminación establecido 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Hay procedimientos básicos, pero poco formalizados y documentados 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Existe un procedimiento estructurado, aunque con algunas áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Se cuenta con un procedimiento completo, detallado y eficiente para la terminación 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-6 gap-4">
+                    <button type="button" onclick="window.location.href='seccion_cinco.html'" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">Regresar</button>
+                    <button id="btnSiguiente" type="submit" disabled class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+                Sección 6 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

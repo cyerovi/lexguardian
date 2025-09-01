@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 7 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">7. GESTIÓN DE INCIDENTES Y CONTINUIDAD</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            
+            <!-- Update progress bar -->
+            <div class="progress-bar mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" 
+                         class="bg-blue-600 h-2 rounded-full" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+
+            <form id="seccion7Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">7.1 ¿Existe un protocolo de notificación de brechas de seguridad, en base a los tiempos establecidos en la normativa vigente?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) No existe 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Existe informalmente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Existe documentado sin pruebas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Existe documentado y probado 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">7.2 ¿Se mantiene un registro de incidentes de seguridad?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No se registran 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Registro informal 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Registro formal sin análisis 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Registro completo con análisis 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">7.3 ¿Existe un equipo de respuesta a incidentes de datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No existe un equipo de respuesta a incidentes
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Hay personal designado, pero sin roles ni responsabilidades claramente definidos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Existe un equipo estructurado, pero con necesidades de mejora en su organización 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Se cuenta con un equipo completo, capacitado y con roles claramente definidos 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">7.4 ¿Se realizan simulacros de respuesta a incidentes con una frecuencia y planificación establecida?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No se realizan simulacros de ningún tipo 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Se realizan simulacros básicos sin periodicidad establecida 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Existen simulacros programados, pero con aspectos a mejorar 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Se realizan simulacros completos y periódicos con evaluación y seguimiento 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">7.5 ¿Existe un plan de continuidad específico para datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No existe un plan de continuidad para datos personales 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Hay medidas básicas sin un plan formal estructurado 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Existe un plan establecido, pero con áreas de mejora identificadas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Se cuenta con un plan completo, actualizado y probado regularmente 
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-6 gap-4">
+                    <button type="button" onclick="window.location.href='seccion_seis.html'" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">Regresar</button>
+                    <button id="btnSiguiente" type="submit" disabled class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+                Sección 7 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

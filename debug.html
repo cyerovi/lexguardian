@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Datos LocalStorage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Debug - Estado de LocalStorage</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Acciones</h2>
+            <div class="space-x-4">
+                <button onclick="mostrarDatos()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Mostrar Datos
+                </button>
+                <button onclick="crearDatosDemo()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Crear Datos Demo
+                </button>
+                <button onclick="limpiarDatos()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Limpiar Datos
+                </button>
+                <button onclick="irAResultados()" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    Ir a Resultados
+                </button>
+            </div>
+        </div>
+        
+        <div id="output" class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Estado Actual</h2>
+            <pre id="dataDisplay" class="bg-gray-100 p-4 rounded text-sm overflow-auto"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Import the demo data creation function
+        function crearDatosDemo() {
+            console.log("Creando datos de demostración...");
+            
+            // Create demo user data
+            const usuarioDemo = {
+                nombre: "Usuario",
+                apellido: "Demo",
+                email: "demo@ejemplo.com",
+                empresa: "Empresa Demo S.A.S."
+            };
+            localStorage.setItem("usuarioData", JSON.stringify(usuarioDemo));
+            
+            // Create demo section data
+            const secciones = [
+                "seccion1Form", "seccion2Form", "seccion3Form", "seccion4Form", 
+                "seccion5Form", "seccion6Form", "seccion7Form"
+            ];
+            
+            secciones.forEach((seccion) => {
+                const respuestasDemo = [];
+                for (let i = 0; i < 5; i++) {
+                    respuestasDemo.push(Math.floor(Math.random() * 3) + 1);
+                }
+                localStorage.setItem(seccion, JSON.stringify(respuestasDemo));
+            });
+            
+            alert("Datos de demostración creados exitosamente");
+            mostrarDatos();
+        }
+        
+        function mostrarDatos() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                try {
+                    data[key] = JSON.parse(localStorage.getItem(key));
+                } catch (e) {
+                    data[key] = localStorage.getItem(key);
+                }
+            }
+            
+            document.getElementById('dataDisplay').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        function limpiarDatos() {
+            if (confirm("¿Está seguro de que desea limpiar todos los datos?")) {
+                localStorage.clear();
+                alert("Datos limpiados");
+                mostrarDatos();
+            }
+        }
+        
+        function irAResultados() {
+            window.location.href = 'resultados.html';
+        }
+        
+        // Show data on page load
+        mostrarDatos();
+    </script>
+</body>
+</html> 

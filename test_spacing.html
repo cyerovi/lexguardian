@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test PDF Spacing Fixes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Test PDF Spacing Fixes</h1>
+        
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">PDF Generation Test</h2>
+            <p class="mb-4">This test verifies that the PDF spacing issues have been resolved:</p>
+            <ul class="list-disc list-inside mb-6 space-y-2">
+                <li>✅ Reduced space under red rectangle on first page</li>
+                <li>✅ Proper spacing between sections to prevent overlap</li>
+                <li>✅ Intelligent page breaks</li>
+                <li>✅ Table column widths fixed for "Plazo máximo sugerido"</li>
+                <li>✅ Legal text centered at bottom of last page</li>
+            </ul>
+            
+            <button id="testPDF" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg">
+                Generate Test PDF
+            </button>
+            
+            <div id="status" class="mt-4 p-4 rounded-lg hidden"></div>
+        </div>
+    </div>
+
+    <!-- Hidden canvas for chart generation -->
+    <canvas id="graficoResultados" width="400" height="200" style="display: none;"></canvas>
+
+    <script src="script.js"></script>
+    <script>
+        let testChart = null;
+        
+        // Set up test data
+        localStorage.setItem("usuarioData", JSON.stringify({
+            nombre: "Test",
+            apellido: "User", 
+            email: "test@example.com",
+            empresa: "Test Company"
+        }));
+        
+        localStorage.setItem("resultadosCalculados", JSON.stringify({
+            porcentajeTotal: 70,
+            puntuacionTotal: 73,
+            porcentajesPorSeccion: [67, 67, 87, 47, 80, 67, 73],
+            puntuacionesPorSeccion: [10, 10, 13, 7, 12, 10, 11]
+        }));
+        
+        // Create a test chart
+        function createTestChart() {
+            const canvas = document.getElementById('graficoResultados');
+            const ctx = canvas.getContext('2d');
+            
+            if (testChart) {
+                testChart.destroy();
+            }
+            
+            testChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sección 1', 'Sección 2', 'Sección 3', 'Sección 4', 'Sección 5', 'Sección 6', 'Sección 7'],
+                    datasets: [{
+                        label: 'Porcentaje de Cumplimiento',
+                        data: [67, 67, 87, 47, 80, 67, 73],
+                        backgroundColor: ['#FFA500', '#FFA500', '#32CD32', '#FF6347', '#32CD32', '#FFA500', '#32CD32']
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            return testChart;
+        }
+        
+        document.getElementById('testPDF').addEventListener('click', async function() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'mt-4 p-4 rounded-lg bg-blue-100 text-blue-800';
+            statusDiv.textContent = 'Generating PDF...';
+            statusDiv.classList.remove('hidden');
+            
+            try {
+                // Create chart first
+                createTestChart();
+                
+                // Wait a moment for chart to render
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                await PDFGenerator.generatePDF();
+                statusDiv.className = 'mt-4 p-4 rounded-lg bg-green-100 text-green-800';
+                statusDiv.textContent = '✅ PDF generated successfully! Check for proper spacing and no text overlap.';
+            } catch (error) {
+                statusDiv.className = 'mt-4 p-4 rounded-lg bg-red-100 text-red-800';
+                statusDiv.textContent = '❌ Error generating PDF: ' + error.message;
+                console.error('PDF Error:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

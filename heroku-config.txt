@@ -1,0 +1,19 @@
+# Heroku Environment Variables Configuration
+# Set these in your Heroku dashboard or using Heroku CLI
+
+NODE_ENV=production
+DB_HOST=your_database_host
+DB_USER=your_database_user  
+DB_PASSWORD=your_database_password
+DB_NAME=diagnostico_pdp
+EMAIL_USER=latitudld@gmail.com
+EMAIL_PASS=ubky kwwf hyrt dcow
+
+# To set these variables in Heroku CLI:
+# heroku config:set NODE_ENV=production
+# heroku config:set DB_HOST=your_database_host
+# heroku config:set DB_USER=your_database_user
+# heroku config:set DB_PASSWORD=your_database_password
+# heroku config:set DB_NAME=diagnostico_pdp
+# heroku config:set EMAIL_USER=latitudld@gmail.com
+# heroku config:set EMAIL_PASS="ubky kwwf hyrt dcow" 

@@ -1,11 +1,51 @@
-# Dependencies
+# Node modules
 node_modules/
 
-# OS
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
 .DS_Store
 Thumbs.db
 
-# Editor
-.vscode/
-.idea/
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build files
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Local development
+*.local 
+
+# Office and backup files
+*.docx
+*.xlsx
+*.pptx
+*.xls
+*.ppt
+*.doc
+~$*
+*.bak
+*.tmp
+*.lock
+*.pdf
+
+# LibreOffice/OnlyOffice lock files
+.~lock.* 

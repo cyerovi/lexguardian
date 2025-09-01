@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 2 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">2. GESTIÓN DE CONSENTIMIENTOS</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            <div class="progress-bar mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" 
+                         class="bg-blue-600 h-2 rounded-full" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+            
+            <form id="seccion2Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">2.1 ¿Cómo se obtiene el consentimiento para el tratamiento de datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) No se solicita consentimiento 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Se obtiene verbalmente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Se obtiene por escrito, pero no sistemáticamente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Se obtiene, documenta y verifica sistemáticamente 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">2.2 ¿Se informa al titular sobre la finalidad del tratamiento de sus datos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No se informa
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Se informa verbalmente
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Se informa por escrito, pero no completamente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Se informa completamente y se documenta  
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">2.3 ¿Se verifica la edad mínima para el consentimiento de menores?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No se realiza
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Consta en el proceso, pero no se hace    
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Existe el proceso, pero requiere mejoras 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Existe el proceso y funciona adecuadamente 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">2.4 ¿Existe un procedimiento para la revocación del consentimiento?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No existe 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Existe parcialmente/en desarrollo 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Existe, pero requiere mejoras 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Existe y funciona adecuadamente 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">2.5 ¿Se documenta el consentimiento para datos sensibles de manera diferenciada?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No se documenta 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Se encuentra en desarrollo 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Existe, pero requiere mejoras 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Existe un registro documental adecuado y categorías especiales de datos personales 
+                        </label>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-6 gap-4">
+                    <button type="button" onclick="window.location.href='seccion_uno.html'" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">Regresar</button>
+                    <button id="btnSiguiente" type="submit" disabled class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+                Sección 2 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

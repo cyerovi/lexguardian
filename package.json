@@ -1,0 +1,54 @@
+{
+    "name": "diagnostico-pdp",
+    "version": "1.0.0",
+    "description": "Sistema de Diagnóstico de Protección de Datos Personales",
+    "main": "server.js",
+    "scripts": {
+        "start": "node dist/server/index.js",
+        "dev": "nodemon --watch src --exec \"npm run build && node dist/server/index.js\"",
+        "build": "tsc -p tsconfig.json",
+        "typecheck": "tsc -p tsconfig.json --pretty",
+        "test": "node test_workflow.js",
+        "lint": "eslint .",
+        "format": "prettier -w ."
+    },
+    "engines": {
+        "node": "18.x",
+        "npm": "9.x"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.18.2",
+        "express-rate-limit": "^7.4.0",
+        "helmet": "^7.1.0",
+        "nodemailer": "^6.9.7",
+        "pg": "^8.11.3",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.9.0",
+        "@types/body-parser": "^1.19.6",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "@types/node": "^24.3.0",
+        "@types/nodemailer": "^7.0.1",
+        "@types/pg": "^8.15.5",
+        "@types/uuid": "^10.0.0",
+        "eslint": "^9.9.0",
+        "globals": "^15.8.0",
+        "nodemon": "^3.0.2",
+        "prettier": "^3.3.3",
+        "typescript": "^5.9.2"
+    },
+    "keywords": [
+        "pdp",
+        "compliance",
+        "data-protection",
+        "evaluation"
+    ],
+    "author": "Agencia43",
+    "license": "ISC",
+    "type": "module"
+}

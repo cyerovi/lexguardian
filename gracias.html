@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Gracias por tu evaluación! | Agencia43</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Aptos', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+  <main class="flex-grow flex flex-col items-center justify-center px-4 pt-8 pb-4">
+    <img src="img/agencia43final.png" alt="Agencia43 Banner" class="w-full max-w-2xl rounded-lg shadow mb-8 object-cover">
+    <div class="bg-white rounded-lg shadow-md p-8 max-w-xl w-full flex flex-col items-center">
+      <div class="flex flex-col items-center">
+        <h1 class="text-2xl md:text-3xl font-bold text-center mb-4">¡Gracias por completar la evaluación express de cumplimiento de la Ley Orgánica de Protección de Datos Personales! Hemos enviado tu informe de cumplimiento.</h1>
+        <svg class="w-16 h-16 text-green-500 mb-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3" fill="#fff"/><path d="M14 25l7 7 13-13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="flex flex-col md:flex-row gap-4 w-full mt-4 justify-center">
+        <a href="index.html" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex-1 text-center font-semibold transition-colors">Volver al inicio</a>
+        <a href="https://agencia43.com/" target="_blank" rel="noopener" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex-1 text-center font-semibold transition-colors">Ir a Agencia 43</a>
+      </div>
+    </div>
+  </main>
+  <footer class="px-4 py-6">
+    <div class="max-w-2xl mx-auto text-center" style="font-family: 'Aptos', sans-serif; font-size: 14px; color: #444;">
+      <div style="margin-bottom: 0.5em;">© 2025 Agencia43 S.A.S. Todos los derechos reservados.</div>
+      <div>Este material es propiedad intelectual protegida. Queda estrictamente prohibida su reproducción total o parcial, su venta, distribución, uso comercial o aprovechamiento para servicios de consultoría sin la autorización expresa de Agencia43 S.A.S. Para solicitar permisos de uso, contactar a: contacto@agencia43.com</div>
+      <hr class="my-4 border-gray-300">
+    </div>
+  </footer>
+  <script>
+    // Access control: only allow if flag is set
+    if (localStorage.getItem('thankYouAccess') !== 'true') {
+      window.location.replace('index.html');
+    } else {
+      // Clear the flag for one-time access
+      localStorage.removeItem('thankYouAccess');
+    }
+  </script>
+</body>
+</html> 

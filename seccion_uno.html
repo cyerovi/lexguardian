@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 1 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+        .progress {
+            height: 0.625rem;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #2563eb;
+            transition: width 0.3s ease-in-out;
+            border-radius: 9999px;
+        }
+    </style>
+    <script src="script.js" type="text/javascript"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">1. GOBIERNO Y CUMPLIMIENTO NORMATIVO</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            
+            <!-- Progress Bar with ARIA support -->
+            <div class="progress-container mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="progress">
+                    <div id="progressBar" 
+                         class="progress-bar" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+
+            <form id="seccion1Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">1.1 ¿La empresa cuenta con políticas de protección de datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) No existen políticas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Existen políticas informales 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Existen políticas documentadas pero no implementadas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Existen políticas documentadas e implementadas 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">1.2 ¿Existe un responsable designado para la protección de datos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No existe responsable 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Responsable informal 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Responsable designado pero sin funciones claras 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Responsable designado y con funciones claras 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">1.3 ¿Se realizan capacitaciones periódicas en protección de datos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No se realizan capacitaciones 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Capacitaciones esporádicas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Capacitaciones periódicas pero no a todo el personal 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Capacitaciones periódicas a todo el personal 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">1.4 ¿La empresa cuenta con un inventario actualizado de bases de datos personales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No existe    
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Existe parcialmente/en desarrollo
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Existe, pero requiere mejoras 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Existe, está automatizado y funciona adecuadamente
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">1.5 ¿Se mantiene actualizado un registro de actividades de tratamiento (RAT)?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No se mantiene ni se ha considerado 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Está en desarrollo
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Existe, pero desactualizado o sin validar 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Existe y se utiliza adecuadamente 
+                        </label>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button id="btnSiguiente" type="submit" disabled
+                      class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                      Siguiente
+                    </button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+              Sección 1 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

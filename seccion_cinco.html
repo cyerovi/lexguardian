@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECCIÓN 5 - Diagnóstico PDP</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Aptos', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-3xl font-bold mb-1 text-center">5. TRANSFERENCIAS DE DATOS</h2>
+            <h5 class="mb-4 text-center">Herramienta de Evaluación de Protección de Datos Personales - AGENCIA43</h5>
+            
+            <div class="progress-bar mb-6">
+                <div class="flex justify-between mb-1">
+                    <span class="text-sm text-gray-600">Progreso</span>
+                    <span id="progressText" class="text-sm text-gray-600" 
+                          aria-live="polite">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div id="progressBar" 
+                         class="bg-blue-600 h-2 rounded-full" 
+                         role="progressbar" 
+                         aria-valuenow="0"
+                         aria-valuemin="0" 
+                         aria-valuemax="100"
+                         style="width: 0%">
+                    </div>
+                </div>
+            </div>
+
+            <form id="seccion5Form">
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">5.1 ¿Cómo se gestionan las transferencias de datos a terceros?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="0" class="mr-2" required>
+                            a) Sin control 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="1" class="mr-2">
+                            b) Control básico sin documentación 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="2" class="mr-2">
+                            c) Control documentado parcialmente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta1" value="3" class="mr-2">
+                            d) Control total documentado 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">5.2 ¿Se cuenta con contratos o acuerdos de transferencia?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="0" class="mr-2" required>
+                            a) No existen contratos 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="1" class="mr-2">
+                            b) Contratos básicos, sin cláusulas específicas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="2" class="mr-2">
+                            c) Contratos con cláusulas específicas pero no revisados periódicamente 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta2" value="3" class="mr-2">
+                            d) Contratos completos y revisados periódicamente 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">5.3 ¿Se documenta el fundamento legal de cada transferencia?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="0" class="mr-2" required>
+                            a) No se documenta ningún fundamento legal para las transferencias 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="1" class="mr-2">
+                            b) Se documenta de manera básica y poco estructurada, sin un proceso sistemático 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="2" class="mr-2">
+                            c) Existe documentación del fundamento legal con un proceso establecido, aunque con áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta3" value="3" class="mr-2">
+                            d) Se documenta exhaustivamente cada transferencia con su fundamento legal específico y actualizado 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">5.4 ¿Existe un registro de transferencias internacionales?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="0" class="mr-2" required>
+                            a) No existe ningún registro de transferencias internacionales 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="1" class="mr-2">
+                            b) Se mantiene un registro básico sin detalles completos ni seguimiento adecuado 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="2" class="mr-2">
+                            c) Existe un registro estructurado con seguimiento, aunque con algunas oportunidades de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta4" value="3" class="mr-2">
+                            d) Se cuenta con un registro completo, detallado y actualizado de todas las transferencias internacionales 
+                        </label>
+                    </div>
+                </div>
+                <div class="pregunta mb-6">
+                    <p class="font-medium mb-3">5.5 ¿Se informa al titular sobre las transferencias de sus datos?</p>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="0" class="mr-2" required>
+                            a) No se informa al titular sobre las transferencias realizadas 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="1" class="mr-2">
+                            b) Se informa de manera básica y poco sistemática sobre algunas transferencias 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="2" class="mr-2">
+                            c) Existe un proceso de información establecido, aunque con algunas áreas de mejora 
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="pregunta5" value="3" class="mr-2">
+                            d) Se mantiene un sistema completo y eficiente de información al titular sobre todas las transferencias 
+                        </label>
+                    </div>
+                </div>
+                <div class="flex justify-between mt-6 gap-4">
+                    <button type="button" onclick="window.location.href='seccion_cuatro.html'" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">Regresar</button>
+                    <button id="btnSiguiente" type="submit" disabled class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+            </form>
+            <div class="text-center text-gray-600 font-medium text-sm mt-8">
+                Sección 5 de 7
+            </div>
+        </div>
+    </div>
+</body>
+</html>

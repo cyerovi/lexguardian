@@ -1,0 +1,157 @@
+/* Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aptos:wght@400;700&display=swap');
+
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Aptos', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: 'Aptos', 'Inter', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+}
+
+/* Layout containers */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 98vh;
+}
+
+.flex-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.image-side {
+    flex: 1;
+    background-color: #042f4dab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-side img {
+    max-width: 100%;
+    height: auto;
+}
+
+.form-side {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff80;
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+/* Form elements */
+.form-group {
+    margin: 0.5rem 0;
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.form-group.checkbox input[type="checkbox"] {
+    margin-top: 0.1rem;
+    min-width: 10px;
+    height: 10px;
+}
+
+.form-group label {
+    line-height: 1.2;
+    max-width: 675px;
+    font-size: 0.75rem;
+    color: var(--color-text);
+}
+
+/* Button styles */
+.btn {
+    font-family: 'Aptos', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    min-width: 128px;
+    padding: 0.7rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+}
+
+.contenedor-boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Progress and Results */
+.progress-bar,
+.resultado-box {
+    margin: 1rem 0;
+}
+
+.progress-bar span,
+.footer-text {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+}
+
+/* Instructions */
+.instrucciones-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.contenido {
+    text-align: justify;
+    padding: 0 20px;
+}
+
+.parrafo {
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+    text-align: right;
+    width: 100%;
+}
+

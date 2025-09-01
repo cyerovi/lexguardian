@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico PDP</title>
+    
+    <!-- Update font loading strategy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .image-side {
+            flex: 1;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 47%;
+            height: 100vh;
+        }
+
+        .bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-side {
+            flex: 1;
+            padding: 2rem;
+            margin-left: 48%;
+            background-color: #fff;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.40rem;
+            margin-bottom: 0.40rem; /* Reduced spacing between checkboxes */
+        }
+
+        .checkbox input {
+            width: auto;
+            margin-top: 0.10rem;
+        }
+
+        .checkbox label {
+            margin-bottom: 0; /* Remove bottom margin from checkbox labels */
+            font-size: 0.90rem; /* Slightly reduce font size for better spacing */
+            line-height: 1.0; /* Adjust line height for better readability */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        button[type="submit"] {
+            font-weight: 600;
+            width: 30%;
+            padding: 1rem;
+            background-color: #073eb5d1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1d4ed8;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .image-side {
+                position: relative;
+                width: 100%;
+                height: 30vh;
+            }
+
+            .form-side {
+                margin-left: 0;
+                padding: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-side">
+            <img src="portada_pdp.jpg" alt="Imagen de fondo" class="bg-image">
+        </div>
+        <div class="form-side">
+            <header>
+                <h1 class="text-4xl font-bold text-center mb-8">Herramienta de Evaluación del Nivel de Cumplimiento: Protección de Datos Personales</h1>
+                <p>
+                
+                <h3 class="mt-16 text-lg" style="text-align: left;">Registre los datos a continuacion para evaluar el nivel de cumplimiento de su organización:</h3>
+            </header>
+            
+            <form id="loginForm" class="space-y-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" autocomplete="given-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" autocomplete="family-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Móvil</label>
+                    <input type="tel" id="telefono" name="telefono" 
+                           pattern="\d{10}" title="Debe tener 10 dígitos" 
+                           autocomplete="tel" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="empresa">Empresa</label>
+                    <input type="text" id="empresa" name="empresa" 
+                           autocomplete="organization" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="industria">Seleccione la industria</label>
+                    <select id="industria" name="industria" 
+                            autocomplete="organization-title" required>
+                        <option value="">Seleccione tipo de industria</option>
+                        <option value="agricultura">Agricultura</option>
+                        <option value="alimentos-bebidas">Alimentos y Bebidas</option>
+                        <option value="arte-cultura">Arte y Cultura</option>
+                        <option value="automotriz">Automotriz</option>
+                        <option value="banca-finanzas">Banca y Finanzas</option>
+                        <option value="comercio-exterior">Comercio Exterior</option>
+                        <option value="construccion">Construcción</option>
+                        <option value="consultoria">Consultoría</option>
+                        <option value="ecommerce">Comercio Electrónico</option>
+                        <option value="deportes">Deportes</option>
+                        <option value="educacion">Educación</option>
+                        <option value="energia">Energía</option>
+                        <option value="entretenimiento">Entretenimiento</option>
+                        <option value="farmaceutica">Farmacéutica</option>
+                        <option value="grafica">Gráfica</option>
+                        <option value="hoteleria-turismo">Hotelería y Turismo</option>
+                        <option value="inmobiliaria">Inmobiliaria</option>
+                        <option value="limpieza ">Limpieza</option>
+                        <option value="logistica">Logística</option>
+                        <option value="moda-textil">Moda y Textil</option>
+                        <option value="manufactura">Manufactura</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="medios-comunicacion">Medios de Comunicación</option>
+                        <option value="mineria">Minería</option>
+                        <option value="ong">Organizaciones Sin Fines de Lucro</option>
+                        <option value="publicidad">Publicidad</option>
+                        <option value="quimica">Química</option>
+                        <option value="retail">Retail</option>
+                        <option value="salud">Salud</option>
+                        <option value="seguridad">Seguridad</option>
+                        <option value="seguros">Seguros</option>
+                        <option value="servicios-profesionales">Servicios Profesionales</option>
+                        <option value="tecnologia">Tecnología</option>
+                        <option value="telecomunicaciones">Telecomunicaciones</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input type="checkbox" id="aceptar-uso" name="aceptar-uso" required>
+                        <label for="aceptar-uso">Acepto el uso de mi información proporcionada para fines legítimos de evaluación de su nivel de cumplimiento de PDP</label>
+                    </div>       
+                    <div class="checkbox">
+                        <input type="checkbox" id="contacto" name="contacto">
+                        <label for="contacto">Acepto ser contactado para recibir información sobre servicios</label>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button type="submit" id="btnSubmit">Continuar</button>
+                </div>
+                <footer class="mt-4" style="text-align: right;">
+                    <p class="text-sm">© 2025 AG43, Ecuador. All rights reserved.</p>
+                </footer>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Add jsPDF library before your script.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                empresa: document.getElementById('empresa').value,
+                industria: document.getElementById('industria').value,
+                acepta_uso: document.getElementById('aceptar-uso').checked,
+                acepta_contacto: document.getElementById('contacto').checked
+            };
+
+            try {
+                const response = await fetch('/api/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Guardar datos del usuario en localStorage
+                    localStorage.setItem('usuarioData', JSON.stringify(formData));
+                    window.location.href = 'instrucciones.html';
+                } else {
+                    alert(data.error || 'Error al procesar el registro');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar el registro. Por favor, intente nuevamente.');
+            }
+        });
+    </script>
+    <!-- Chart.js v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- ChartDataLabels plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <!-- Your main script -->
+    <script src="script.js"></script>
+</body>
+</html>

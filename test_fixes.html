@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Fixes - Total Score & PDF Spacing</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Test: Total Score Display & PDF Spacing Fixes</h1>
+        
+        <div class="bg-white rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Results</h2>
+            
+            <!-- Test total score display -->
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2">✅ Total Score Display Test</h3>
+                <div class="bg-gradient-to-r from-gray-100 to-gray-200 p-4 rounded-lg border-2 border-gray-300">
+                    <div class="text-center">
+                        <h4 class="text-lg font-bold text-gray-800 mb-2">PUNTUACIÓN TOTAL</h4>
+                        <div class="flex justify-center items-center space-x-4">
+                            <div class="bg-white px-4 py-2 rounded-lg shadow">
+                                <span class="text-sm text-gray-600">Puntos:</span>
+                                <span id="totalPuntos" class="text-xl font-bold text-blue-600 ml-2">73/105</span>
+                            </div>
+                            <div class="bg-white px-4 py-2 rounded-lg shadow">
+                                <span class="text-sm text-gray-600">Porcentaje:</span>
+                                <span id="totalPorcentaje" class="text-xl font-bold text-green-600 ml-2">70%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hidden canvas for chart -->
+            <canvas id="graficoResultados" style="display: none;"></canvas>
+            
+            <!-- Test buttons -->
+            <div class="space-y-4">
+                <button id="testTotalScore" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700">
+                    🧪 Test Total Score Display
+                </button>
+                
+                <button id="testPDFSpacing" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700">
+                    📄 Test PDF Spacing Fix
+                </button>
+                
+                <button id="goToResults" class="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700">
+                    🔗 Go to Results Page
+                </button>
+            </div>
+            
+            <div id="testOutput" class="mt-6 p-4 bg-gray-50 rounded-lg hidden">
+                <h4 class="font-semibold mb-2">Test Output:</h4>
+                <pre id="testLog" class="text-sm text-gray-700"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const testOutput = document.getElementById('testOutput');
+            const testLog = document.getElementById('testLog');
+            
+            function log(message) {
+                console.log(message);
+                testLog.textContent += message + '\n';
+                testOutput.classList.remove('hidden');
+            }
+            
+            // Test total score display
+            document.getElementById('testTotalScore').addEventListener('click', function() {
+                log('=== TESTING TOTAL SCORE DISPLAY ===');
+                
+                // Create demo data
+                crearDatosDemo();
+                log('✅ Demo data created');
+                
+                // Calculate results
+                const resultados = calcularResultados();
+                log(`✅ Results calculated: ${resultados.totalPuntos}/105 points (${resultados.porcentajeTotal}%)`);
+                
+                // Update display
+                document.getElementById('totalPuntos').textContent = `${resultados.totalPuntos}/105`;
+                document.getElementById('totalPorcentaje').textContent = `${Math.round(resultados.porcentajeTotal)}%`;
+                log('✅ Total score display updated successfully');
+                
+                log('=== TEST COMPLETED ===');
+            });
+            
+            // Test PDF spacing
+            document.getElementById('testPDFSpacing').addEventListener('click', async function() {
+                log('=== TESTING PDF SPACING FIX ===');
+                
+                try {
+                    // Ensure we have data
+                    crearDatosDemo();
+                    log('✅ Demo data ensured');
+                    
+                    // Create a simple chart for PDF
+                    const canvas = document.getElementById('graficoResultados');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Create minimal chart
+                    if (typeof Chart !== 'undefined') {
+                        chartInstance = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Test'],
+                                datasets: [{
+                                    data: [70],
+                                    backgroundColor: ['rgba(245, 158, 11, 0.8)']
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                plugins: { legend: { display: false } }
+                            }
+                        });
+                        log('✅ Test chart created');
+                    }
+                    
+                    // Generate PDF with spacing fixes
+                    const doc = await PDFGenerator.generatePDF();
+                    log('✅ PDF generated with spacing fixes');
+                    
+                    // Save PDF for testing
+                    doc.save('test_spacing_fix.pdf');
+                    log('✅ PDF saved as test_spacing_fix.pdf');
+                    log('📋 Check the PDF to verify spacing between pages is reduced');
+                    
+                } catch (error) {
+                    log(`❌ Error: ${error.message}`);
+                }
+                
+                log('=== TEST COMPLETED ===');
+            });
+            
+            // Go to results page
+            document.getElementById('goToResults').addEventListener('click', function() {
+                // Ensure demo data exists
+                crearDatosDemo();
+                window.location.href = 'resultados.html';
+            });
+        });
+    </script>
+</body>
+</html> 

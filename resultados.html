@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Evaluación de Protección de Datos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-gray-800">Resultados de la Evaluación</h2>
+            <p class="text-gray-600 mt-2">Diagnóstico de Protección de Datos Personales - AGENCIA43</p>
+        </header>
+
+        <!-- User Information Section -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-center">Información del Evaluador</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Elaborado por:</h3>
+                    <p id="elaboradoPor" class="text-lg text-gray-800">--</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Correo electrónico:</h3>
+                    <p id="correoElectronico" class="text-lg text-gray-800">--</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-semibold mb-2">Resultado Global</h2>
+                <div class="flex flex-col items-center justify-center">
+                    <!-- Colored percentage box -->
+                    <div id="porcentajeBox" class="w-32 h-32 rounded-lg flex items-center justify-center mb-4 shadow-lg">
+                        <span id="porcentajeNumero" class="text-4xl font-bold text-white">--%</span>
+                    </div>
+                    <h3 id="nivelRiesgo" class="text-2xl font-bold mb-2"></h3>
+                    <p id="porcentajeGlobal" class="text-lg mt-2"></p>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="h-80">
+                    <canvas id="graficoResultados"></canvas>
+                </div>
+            </div>
+            
+            <!-- Resultados por sección -->
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold mb-4 text-center">Resultados por Sección</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-semibold text-gray-800">1. GOBIERNO Y CUMPLIMIENTO NORMATIVO</h4>
+                        <p id="seccion-1" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+                        <h4 class="font-semibold text-gray-800">2. GESTIÓN DE CONSENTIMIENTOS</h4>
+                        <p id="seccion-2" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-semibold text-gray-800">3. MEDIDAS DE SEGURIDAD</h4>
+                        <p id="seccion-3" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-purple-500">
+                        <h4 class="font-semibold text-gray-800">4. DERECHOS DE LOS TITULARES</h4>
+                        <p id="seccion-4" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                        <h4 class="font-semibold text-gray-800">5. TRANSFERENCIAS DE DATOS</h4>
+                        <p id="seccion-5" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-pink-500">
+                        <h4 class="font-semibold text-gray-800">6. GESTIÓN DE PROVEEDORES Y TERCEROS</h4>
+                        <p id="seccion-6" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-red-500 md:col-span-2">
+                        <h4 class="font-semibold text-gray-800">7. GESTIÓN DE INCIDENTES Y CONTINUIDAD</h4>
+                        <p id="seccion-7" class="text-lg mt-2">Puntuación: --</p>
+                    </div>
+                </div>
+                
+                <!-- Total Score Section -->
+                <div class="mt-6 bg-gradient-to-r from-gray-100 to-gray-200 p-6 rounded-lg border-2 border-gray-300">
+                    <div class="text-center">
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">PUNTUACIÓN TOTAL</h4>
+                        <div class="flex justify-center items-center space-x-4">
+                            <div class="bg-white px-4 py-2 rounded-lg shadow">
+                                <span class="text-sm text-gray-600">Puntos:</span>
+                                <span id="totalPuntos" class="text-2xl font-bold text-blue-600 ml-2">--/105</span>
+                            </div>
+                            <div class="bg-white px-4 py-2 rounded-lg shadow">
+                                <span class="text-sm text-gray-600">Porcentaje:</span>
+                                <span id="totalPorcentaje" class="text-2xl font-bold text-green-600 ml-2">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="resultsContainer"></div>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Acciones Disponibles</h2>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button id="descargarPDF" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">
+                    <i class="fas fa-file-pdf mr-2"></i>DESCARGAR EL INFORME
+                </button>
+                <button id="enviarEmail" class="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">
+                    <i class="fas fa-envelope mr-2"></i>ENVIAR POR EMAIL
+                </button>
+                <button id="volverFormulario" class="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 rounded-lg flex items-center justify-center transition-colors">
+                    <i class="fas fa-home mr-2"></i>VOLVER AL INICIO
+                </button>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-500 text-sm mt-10">
+            <p>© 2025 Agencia43 S.A.S. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="script.js?v=20250901"></script>
+    <script>
+        // Initialize the results page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, starting safe initialization...');
+            // Rely on script.js to compute and render the real percentage
+            safeInitializeResultsPage();
+        });
+    </script>
+</body>
+</html>
